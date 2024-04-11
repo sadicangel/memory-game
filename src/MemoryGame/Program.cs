@@ -1,3 +1,3 @@
 ﻿
-using var game = new MemoryGame.Game1();
+using var game = new MemoryGame.MemoryGame();
 game.Run();

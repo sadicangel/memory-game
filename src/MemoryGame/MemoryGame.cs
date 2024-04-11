@@ -1,32 +1,27 @@
-﻿using Microsoft.Xna.Framework;
+﻿using MemoryGame.CardGame;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace MemoryGame;
-public class Game1 : Game
+public class MemoryGame : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
+    private readonly SceneManager _sceneManager;
 
-    public Game1()
+    public MemoryGame()
     {
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
-    }
-
-    protected override void Initialize()
-    {
-        // TODO: Add your initialization logic here
-
-        base.Initialize();
+        _sceneManager = new SceneManager(Content);
     }
 
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
-
-        // TODO: use this.Content to load your game content here
+        _sceneManager.PushScene(new CardGameScene(_sceneManager));
     }
 
     protected override void Update(GameTime gameTime)
@@ -34,7 +29,7 @@ public class Game1 : Game
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
 
-        // TODO: Add your update logic here
+        _sceneManager.CurrentScene.Update(gameTime);
 
         base.Update(gameTime);
     }
@@ -43,7 +38,7 @@ public class Game1 : Game
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
-        // TODO: Add your drawing code here
+        _sceneManager.CurrentScene.Draw(gameTime, _spriteBatch);
 
         base.Draw(gameTime);
     }
