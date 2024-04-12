@@ -11,7 +11,11 @@ public sealed class Card
 
     public required Vector2 Position { get; set; }
 
-    public Rectangle Rect { get => new(new Point((int)Rank, (int)Suit) * Size, Size); }
+    public bool IsFlipped { get; set; }
+
+    public Rectangle SrcRect { get => new((IsFlipped ? new Point((int)Rank, (int)Suit) : new Point(1, 4)) * Size, Size); }
+
+    public Rectangle DstRect { get => new(Position.ToPoint(), Size); }
 }
 
 public enum Suit

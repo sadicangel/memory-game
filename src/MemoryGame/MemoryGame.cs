@@ -21,7 +21,7 @@ public class MemoryGame : Game
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
-        _sceneManager.PushScene(new CardGameScene(_sceneManager));
+        _sceneManager.PushScene(new CardScene(_sceneManager));
     }
 
     protected override void Update(GameTime gameTime)
