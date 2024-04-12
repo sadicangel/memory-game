@@ -2,9 +2,11 @@
 
 namespace MemoryGame.CardGame;
 
-public sealed class Card
+public sealed record class Card
 {
     public static readonly Point Size = new(71, 96);
+
+    public int Id { get => ((int)Suit << 16) + (int)Rank; }
 
     public required Suit Suit { get; set; }
     public required Rank Rank { get; set; }
@@ -12,6 +14,8 @@ public sealed class Card
     public required Vector2 Position { get; set; }
 
     public bool IsFlipped { get; set; }
+
+    public bool IsVisible { get; set; } = true;
 
     public Rectangle SrcRect { get => new((IsFlipped ? new Point((int)Rank, (int)Suit) : new Point(1, 4)) * Size, Size); }
 
