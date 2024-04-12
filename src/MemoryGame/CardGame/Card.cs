@@ -2,17 +2,19 @@
 
 namespace MemoryGame.CardGame;
 
-public readonly record struct Card
+public sealed class Card
 {
     public static readonly Point Size = new(71, 96);
 
-    public required CardSuit Suit { get; init; }
-    public required CardRank Rank { get; init; }
+    public required Suit Suit { get; set; }
+    public required Rank Rank { get; set; }
 
-    public Point SpriteSheetPosition { get => new Point((int)Rank, (int)Suit); }
+    public required Vector2 Position { get; set; }
+
+    public Rectangle Rect { get => new(new Point((int)Rank, (int)Suit) * Size, Size); }
 }
 
-public enum CardSuit
+public enum Suit
 {
     Spades,
     Hearts,
@@ -20,7 +22,7 @@ public enum CardSuit
     Diamonds,
 }
 
-public enum CardRank
+public enum Rank
 {
     Ace,
     Two,

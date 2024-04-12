@@ -2,14 +2,13 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System.Linq;
 
 namespace MemoryGame.CardGame;
 public sealed class CardGameScene(SceneManager sceneManager) : Scene(sceneManager)
 {
     private Texture2D _spritesheet;
     private KeyboardState _prevKbdState;
-    private Card[] _cards = Enumerable.Range(0, 13).Select(rank => new Card { Rank = (CardRank)rank, Suit = CardSuit.Spades }).ToArray();
+    private Board _board = new Board(3, 6);
 
     public override void LoadContent(ContentManager contentManager)
     {
@@ -41,9 +40,9 @@ public sealed class CardGameScene(SceneManager sceneManager) : Scene(sceneManage
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
         spriteBatch.Begin();
-        for (int i = 0; i < _cards.Length; ++i)
+        foreach (var card in _board.Cards)
         {
-            spriteBatch.Draw(_spritesheet, (new Point(i, 0) * Card.Size).ToVector2(), new Rectangle(_cards[i].SpriteSheetPosition * Card.Size, Card.Size), Color.White);
+            spriteBatch.Draw(_spritesheet, card.Position, card.Rect, Color.White);
         }
         spriteBatch.End();
     }
