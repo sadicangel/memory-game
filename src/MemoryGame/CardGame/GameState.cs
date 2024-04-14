@@ -43,7 +43,7 @@ public sealed class ResolveTurnState(CardScene scene) : GameState(scene)
     {
         if (Scene.MouseClicked)
         {
-            if (Scene.FirstCard.Id == Scene.SecondCard.Id)
+            if (Scene.FirstCard!.Id == Scene.SecondCard!.Id)
             {
                 Scene.FirstCard.IsVisible = false;
                 Scene.SecondCard.IsVisible = false;

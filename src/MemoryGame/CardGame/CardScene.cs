@@ -7,30 +7,34 @@ namespace MemoryGame.CardGame;
 
 public sealed class CardScene : Scene
 {
-    private Texture2D _spritesheet;
+    private Texture2D _spritesheet = default!;
     private MouseState _lastMouseState;
+    private readonly ContentManager _contentManager;
+    private readonly SpriteBatch _spriteBatch;
 
     public bool MouseClicked { get; private set; }
 
     public Board Board { get; }
-    public Card FirstCard { get; set; }
-    public Card SecondCard { get; set; }
+    public Card? FirstCard { get; set; }
+    public Card? SecondCard { get; set; }
     public GameState State { get; set; }
 
-    public CardScene(SceneManager sceneManager) : base(sceneManager)
+    public CardScene(ContentManager contentManager, SpriteBatch spriteBatch)
     {
         Board = new Board(4, 4);
         State = new FlipFirstCardState(this);
+        _contentManager = contentManager;
+        _spriteBatch = spriteBatch;
     }
 
-    public override void LoadContent(ContentManager contentManager)
+    public override void LoadContent()
     {
-        _spritesheet = contentManager.Load<Texture2D>("Cards/spritesheet");
+        _spritesheet = _contentManager.Load<Texture2D>("Cards/spritesheet");
     }
 
     public override void UnloadContent() => _spritesheet.Dispose();
 
-    public Card GetClickedCard()
+    public Card? GetClickedCard()
     {
         if (!MouseClicked) return null;
         var mouseRect = new Rectangle(_lastMouseState.Position, new Point(1, 1));
@@ -50,17 +54,16 @@ public sealed class CardScene : Scene
         State.Update(gameTime);
     }
 
-    public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+    public override void Draw(GameTime gameTime)
     {
-        spriteBatch.Begin();
+        _spriteBatch.Begin();
         foreach (var card in Board.Cards)
         {
             if (card.IsVisible)
             {
-                spriteBatch.Draw(_spritesheet, card.Position, card.SrcRect, Color.White);
+                _spriteBatch.Draw(_spritesheet, card.Position, card.SrcRect, Color.White);
             }
         }
-        spriteBatch.End();
+        _spriteBatch.End();
     }
-
 }

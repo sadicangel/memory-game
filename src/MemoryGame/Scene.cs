@@ -1,38 +1,32 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 
 namespace MemoryGame;
 
-public class SceneManager(ContentManager contentManager)
+public class SceneManager(IServiceProvider services)
 {
     private readonly Stack<Scene> _sceneStack = new();
 
     public Scene CurrentScene { get => _sceneStack.Peek(); }
 
-    public void PushScene(Scene scene)
+    public TScene GetCurrentScene<TScene>() where TScene : Scene => (TScene)CurrentScene;
+
+    public void PushScene<TScene>() where TScene : Scene
     {
-        scene.LoadContent(contentManager);
+        var scene = services.GetRequiredService<TScene>();
+        scene.LoadContent();
         _sceneStack.Push(scene);
     }
 
     public void PopScene() => _sceneStack.Pop().UnloadContent();
 }
 
-public abstract class Scene(SceneManager sceneManager) : IDisposable
+public abstract class Scene
 {
-    public SceneManager SceneManager { get; } = sceneManager;
-
-    public virtual void LoadContent(ContentManager contentManager) { }
+    public virtual void LoadContent() { }
     public virtual void UnloadContent() { }
     public virtual void Update(GameTime gameTime) { }
-    public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch) { }
-
-    public void Dispose()
-    {
-        UnloadContent();
-        GC.SuppressFinalize(this);
-    }
+    public virtual void Draw(GameTime gameTime) { }
 }
