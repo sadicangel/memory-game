@@ -2,14 +2,14 @@
 
 namespace MemoryGame.CardGame;
 
-public abstract class GameState(CardScene scene)
+public abstract class CardSceneState(CardScene scene)
 {
     protected CardScene Scene { get; } = scene;
 
     public abstract void Update(GameTime gameTime);
 }
 
-public sealed class FlipFirstCardState(CardScene scene) : GameState(scene)
+public sealed class FlipFirstCardState(CardScene scene) : CardSceneState(scene)
 {
     public override void Update(GameTime gameTime)
     {
@@ -23,7 +23,7 @@ public sealed class FlipFirstCardState(CardScene scene) : GameState(scene)
     }
 }
 
-public sealed class FlipSecondCardState(CardScene scene) : GameState(scene)
+public sealed class FlipSecondCardState(CardScene scene) : CardSceneState(scene)
 {
     public override void Update(GameTime gameTime)
     {
@@ -37,7 +37,7 @@ public sealed class FlipSecondCardState(CardScene scene) : GameState(scene)
     }
 }
 
-public sealed class ResolveTurnState(CardScene scene) : GameState(scene)
+public sealed class ResolveTurnState(CardScene scene) : CardSceneState(scene)
 {
     public override void Update(GameTime gameTime)
     {

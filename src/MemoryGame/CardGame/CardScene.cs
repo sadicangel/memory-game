@@ -17,7 +17,7 @@ public sealed class CardScene : Scene
     public Board Board { get; }
     public Card? FirstCard { get; set; }
     public Card? SecondCard { get; set; }
-    public GameState State { get; set; }
+    public CardSceneState State { get; set; }
 
     public CardScene(ContentManager contentManager, SpriteBatch spriteBatch)
     {

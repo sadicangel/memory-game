@@ -28,7 +28,7 @@ public class GameMain : Game
             .AddSingleton(_graphics)
             .AddSingleton(new SpriteBatch(GraphicsDevice))
             .AddSingleton<SceneManager>()
-            .AddSingleton<CardScene>()
+            .AddTransient<CardScene>()
             .BuildServiceProvider();
 
         _sceneManager = _services.GetRequiredService<SceneManager>();
