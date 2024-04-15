@@ -19,7 +19,7 @@ public sealed class Board(int rows, int cols, int spacing = 6)
         }
     }
 
-    public Vector2 Size { get => Cards[^1].Position - Cards[0].Position; }
+    public Vector2 Size { get => Cards[^1].Position + Card.Size.ToVector2() - Cards[0].Position; }
 
     private void UpdatePositions(Vector2 boardXy)
     {

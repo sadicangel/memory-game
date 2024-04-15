@@ -30,6 +30,7 @@ public sealed class CardScene : Scene
     public override void LoadContent()
     {
         _spritesheet = _contentManager.Load<Texture2D>("Cards/spritesheet");
+        Board.Position = (_spriteBatch.GraphicsDevice.PresentationParameters.Bounds.Size.ToVector2() - Board.Size) / 2;
     }
 
     public override void UnloadContent() => _spritesheet.Dispose();
