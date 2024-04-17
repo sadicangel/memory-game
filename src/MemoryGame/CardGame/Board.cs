@@ -21,6 +21,8 @@ public sealed class Board(int rows, int cols, int spacing = 6)
 
     public Vector2 Size { get => Cards[^1].Position + Card.Size.ToVector2() - Cards[0].Position; }
 
+    public Board CreateNew(Vector2 position = default) => new(rows, cols, spacing) { Position = position };
+
     private void UpdatePositions(Vector2 boardXy)
     {
         var count = rows * cols / 2;

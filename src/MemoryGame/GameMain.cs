@@ -1,4 +1,6 @@
 ﻿using MemoryGame.CardGame;
+using MemoryGame.CardGame.States;
+using MemoryGame.Common;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -27,8 +29,14 @@ public class GameMain : Game
             .AddSingleton(Content)
             .AddSingleton(_graphics)
             .AddSingleton(new SpriteBatch(GraphicsDevice))
+            .AddSingleton<InputManager>()
+            .AddSingleton<ResourceCache>()
             .AddSingleton<SceneManager>()
-            .AddTransient<CardScene>()
+            .AddSingleton<CardScene>()
+            .AddTransient<FlipFirstCardState>()
+            .AddTransient<FlipSecondCardState>()
+            .AddTransient<ResolveTurnState>()
+            .AddTransient<WinCardGameState>()
             .BuildServiceProvider();
 
         _sceneManager = _services.GetRequiredService<SceneManager>();
